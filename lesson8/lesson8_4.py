@@ -33,13 +33,19 @@ def play_game(): #沒有呼叫就不會執行
         except Exception as e:
             print(e)
 
-play_count = 0  #在root區，一定會執行
-while(True):
-    play_count += 1
-    play_game()  #呼叫play_game()這個function
-    is_continue = input("您還要繼續嗎(y,n)?")
-    if is_continue == "n":
-        break
+def main():
+    play_count = 0  #在root區，一定會執行
+    while(True):
+        play_count += 1
+        play_game()  #呼叫play_game()這個function
+        is_continue = input("您還要繼續嗎(y,n)?")
+        if is_continue == "n":
+            break
 
-print(f"您共玩了{play_count}次")
-print("遊戲結束")
+    print(f"您共玩了{play_count}次")
+    print("遊戲結束")
+
+# main()  #呼叫main function
+
+if __name__ == "__main__":  #function的名稱(入建變數為__name__)一定是字串-> XXX.py檔的主執行檔名稱為"__main__"，程式的開始執行py檔
+    main()
