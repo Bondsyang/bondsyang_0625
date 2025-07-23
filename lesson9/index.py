@@ -1,17 +1,17 @@
-import tools  #import自行建立的module (必為py檔)
-
+import tools  #import自行建立的module (必為py檔), __name__ = "__tools__"
+from tools import play_game,Empty
 
 def main(): #try也可以放在主function裡
     try:
         play_count = 0  #在root區，一定會執行
         while(True):
             play_count += 1
-            tools.play_game()  #呼叫play_game()這個function，如果有raise會直接從這個回圈跳出
+            play_game()  #呼叫play_game()這個function，如果有raise會直接從這個回圈跳出
             is_continue = input("您還要繼續嗎(y,n)?")
             if is_continue == "n":
                 break
 
-        print(f"您共玩了{play_count}次")
+        print(f"{tools.user_name}共玩了{play_count}次")
         print("遊戲結束")
         
     except ValueError:

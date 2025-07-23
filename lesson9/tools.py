@@ -1,4 +1,6 @@
-import random
+import random   #這是一個module檔，裡面可以有function、class、變數(常數)
+
+user_name = 'Bonds'
 
 def play_game(): #沒有呼叫就不會執行
     min = 1
@@ -27,3 +29,7 @@ def play_game(): #沒有呼叫就不會執行
                 
             else:
                 print("請輸入提示範圍內的數字")
+
+
+class Empty():
+     pass
