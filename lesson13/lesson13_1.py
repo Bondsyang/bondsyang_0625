@@ -7,6 +7,9 @@ import random
 
 random.seed(4561)
 
+# 定義科目常數
+SUBJECTS = ["國文", "英文", "數學"]
+
 def sample_names_from_file(file_name: str, nums: int = 1) -> list[str]:
     """
     從指定的檔案中讀取所有姓名，並隨機取出指定數量的姓名。
@@ -18,10 +21,19 @@ def sample_names_from_file(file_name: str, nums: int = 1) -> list[str]:
     回傳:
         list[str]: 隨機取出的姓名列表。
     """
-    with open(file_name, encoding="utf-8") as file:
-        content: str = file.read()
-        names: list[str] = content.split()
-        return random.sample(names, nums)
+    try:
+        with open(file_name, encoding="utf-8") as file:
+            content: str = file.read()
+            names: list[str] = content.split()
+            if nums > len(names):
+                raise ValueError("取樣數量超過檔案中的姓名數量。")
+            return random.sample(names, nums)
+    except FileNotFoundError:
+        print(f"錯誤: 找不到檔案 '{file_name}'。")
+        return []
+    except ValueError as e:
+        print(f"錯誤: {e}")
+        return []
 
 def generate_scores_for_names(names: list[str]) -> list[dict]:
     """
@@ -52,12 +64,12 @@ def print_student_scores(students: list[dict]):
         None
     '''    
     print("學生成績表:")
-    print("姓名\t國文\t英文\t數學\t平均")
+    print(f"{'姓名':<10}{'國文':<8}{'英文':<8}{'數學':<8}{'平均':<8}")
     for student in students:
         name = student["姓名"]
-        scores:list[int] = [student[subject] for subject in ["國文", "英文", "數學"]]        
+        scores: list[int] = [student[subject] for subject in SUBJECTS]
         average = sum(scores) / len(scores)
-        print(f"{name}\t{scores[0]}\t{scores[1]}\t{scores[2]}\t{average:.2f}")
+        print(f"{name:<10}{scores[0]:<8}{scores[1]:<8}{scores[2]:<8}{average:.2f}")
 
 
 def analyze_scores(students: list[dict]) -> None:
@@ -70,9 +82,13 @@ def analyze_scores(students: list[dict]) -> None:
     回傳:
         None
     """
+    if not students:
+        print("成績分析: 無學生資料")
+        return
+
     total_scores = []
     for student in students:
-        scores = [student[subject] for subject in ["國文", "英文", "數學"]]
+        scores = [student[subject] for subject in SUBJECTS]
         total_scores.append(sum(scores) / len(scores))
 
     class_average = sum(total_scores) / len(total_scores)
