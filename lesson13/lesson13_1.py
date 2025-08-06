@@ -60,11 +60,40 @@ def print_student_scores(students: list[dict]):
         print(f"{name}\t{scores[0]}\t{scores[1]}\t{scores[2]}\t{average:.2f}")
 
 
+def analyze_scores(students: list[dict]) -> None:
+    """
+    列印成績分析資訊，包括全班平均成績、最高分學生及最低分學生。
+
+    參數:
+        students (list[dict]): 包含學生姓名和分數的列表。
+
+    回傳:
+        None
+    """
+    total_scores = []
+    for student in students:
+        scores = [student[subject] for subject in ["國文", "英文", "數學"]]
+        total_scores.append(sum(scores) / len(scores))
+
+    class_average = sum(total_scores) / len(total_scores)
+    max_score = max(total_scores)
+    min_score = min(total_scores)
+
+    max_student = students[total_scores.index(max_score)]["姓名"]
+    min_student = students[total_scores.index(min_score)]["姓名"]
+
+    print("成績分析:")
+    print(f"- 全班平均成績: {class_average:.1f}分")
+    print(f"- 最高分學生: {max_student}({max_score:.1f}分)")
+    print(f"- 最低分學生: {min_student}({min_score:.1f}分)")
+
+
 def main():
     print("=== 學生成績管理系統 ===\n\n")
     names: list[str] = sample_names_from_file("names.txt", nums=3)
     students: list[dict] = generate_scores_for_names(names)
     print_student_scores(students)
+    analyze_scores(students)
 
 if __name__ == "__main__":
     main()
