@@ -1,3 +1,2 @@
-# 忽略的文件和資料夾
 .env
-__pycache__/
+__pycache__
